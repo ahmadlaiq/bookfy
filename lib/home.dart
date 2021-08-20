@@ -1,9 +1,12 @@
-import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:book/detail.dart';
-//Import firebase_admob.dart
-//import 'package:firebase_admob/firebase_admob.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,26 +14,38 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
- // BannerAd _bannerAd;
- // static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo();
- // BannerAd createBannerAdd() {
- //   return BannerAd(
-  //      targetingInfo: targetingInfo,
-   //     adUnitId: BannerAd.testAdUnitId,
-   //     size: AdSize.smartBanner,
-    //    listener: (MobileAdEvent event) {
-     //     print('Banner Event: $event');
-      //  });
-  //}
+
+  String pathPDF = "";
+  String filePDF = "https://www.byriza.com/demo/file-PDF.pdf";
+
+  @override
+  void initState() {
+    super.initState();
+    createFileOfPdfUrl(filePDF).then((f) {
+      setState(() {
+        pathPDF = f.path;
+        print(pathPDF);
+      });
+    });
+  }
+
+  Future createFileOfPdfUrl(filePDF) async {
+    final url = filePDF;
+    final filename = url.substring(url.lastIndexOf("/") + 1);
+    var request = await HttpClient().getUrl(Uri.parse(url));
+    var response = await request.close();
+    var bytes = await consolidateHttpClientResponseBytes(response);
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    File file = new File('$dir/$filename');
+    await file.writeAsBytes(bytes);
+    return file;
+  }
 
   @override
   Widget build(BuildContext context) {
-  //  Timer(Duration(seconds: 10), () {
-  //    _bannerAd?.show();
-  //  });
     return Scaffold(
         body: Container(
-      margin: EdgeInsets.all(20),
+      margin: EdgeInsets.all(15),
       child: ListView(
         children: <Widget>[
           Padding(
@@ -57,7 +72,7 @@ class _HomeState extends State<Home> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(45, 5, 45, 0),
+            padding: const EdgeInsets.fromLTRB(45, 5, 45, 30),
             child: Text(
               "Mau membaca buku apa hari ini?",
               style: TextStyle(
@@ -66,179 +81,120 @@ class _HomeState extends State<Home> {
                   fontWeight: FontWeight.normal),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Card(
-                      elevation: 8,
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+          Card(
+            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+            child: InkWell(
+              onTap: () {},
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Thumbnail
+                  Container(
+                    width: 100,
+                    height: 120,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      child: Image.network(
+                        'https://ebooks.gramedia.com/ebook-covers/47957/image_highres/ID_FYW2019MTH06FYW.jpg',
+                        fit: BoxFit.cover,
                       ),
-                      child: Column(children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Ink.image(
-                              image: NetworkImage(
-                                  'https://ebooks.gramedia.com/ebook-covers/47957/image_highres/ID_FYW2019MTH06FYW.jpg'),
-                              height: 180,
-                              width: 120,
-                              fit: BoxFit.cover,
-                            ),
-                          ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  //Column
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        //judul
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          padding: const EdgeInsets.only(bottom: 5),
+                          child: Text(
+                            'Buku Dada dan Lala',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                            // softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            // overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        ButtonBar(
-                          alignment: MainAxisAlignment.center,
-                          children: [
-                            FlatButton(
-                              child: Text('Detail'),
-                              onPressed: () {
-                                debugPrint('Berhasil Klik');
-                              },
-                            ),
-                          ],
-                        )
-                      ])),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Card(
-                      elevation: 8,
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Column(children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Ink.image(
-                              image: NetworkImage(
-                                  'https://upload.wikimedia.org/wikipedia/commons/4/4b/Sebuah-seni-untuk-bersikap-bodoh-amat.jpg'),
-                              height: 180,
-                              width: 120,
-                              fit: BoxFit.cover,
-                            ),
-                          ],
+                        SizedBox(height: 5),
+                        //status
+                        Text(
+                          "Penulis: Ahmad Fuadi",
+                          style: TextStyle(color: Colors.red),
                         ),
-                        ButtonBar(
-                          alignment: MainAxisAlignment.center,
-                          children: [
-                            FlatButton(
-                              child: Text('Detail'),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return Detail();
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        )
-                      ])),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Card(
-                      elevation: 8,
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Column(children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Ink.image(
-                              image: NetworkImage(
-                                  'https://imgv2-1-f.scribdassets.com/img/document/384431084/original/765c6e79a0/1617816279?v=1'),
-                              height: 180,
-                              width: 120,
-                              fit: BoxFit.cover,
-                            ),
-                          ],
+                        //genre
+                        SizedBox(
+                          height: 4,
                         ),
-                        ButtonBar(
-                          alignment: MainAxisAlignment.center,
-                          children: [
-                            FlatButton(
-                              child: Text('Detail'),
-                              onPressed: () {
-                                debugPrint('Berhasil Klik');
-                              },
-                            ),
-                          ],
-                        )
-                      ])),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Card(
-                      elevation: 8,
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Column(children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Ink.image(
-                              image: NetworkImage(
-                                  'https://www.akubaca.com/wp-content/uploads/2017/01/Fihi_Ma_Fihi__Jalaluddin_Rumi__Jilid_Biasa_-600x856.jpg'),
-                              height: 180,
-                              width: 120,
-                              fit: BoxFit.cover,
-                            ),
-                          ],
+                        Text(
+                          "Tahun: 2015",
+                          style: TextStyle(color: Colors.red),
                         ),
-                        ButtonBar(
-                          alignment: MainAxisAlignment.center,
-                          children: [
-                            FlatButton(
-                              child: Text('Detail'),
-                              onPressed: () {
-                                debugPrint('Berhasil Klik');
-                              },
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "Tebal: 200",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(80, 4, 0, 0),
+                          child: SizedBox(
+                            height: 20,
+                            child: RaisedButton(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 2, horizontal: 3),
+                              onPressed:  () => Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => PDFScreen(pathPDF)),
+                              ),
+                              color: Color(0xFFF5F6F9),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                              ),
+                              // icon: FaIcon(FontAwesomeIcons.google),
+                              child: Text(
+                                "Baca",
+                                style: TextStyle(
+                                    color: Color(0xFF4285F4),
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ],
-                        )
-                      ])),
-                ),
-              ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
     ));
   }
+}
 
-  //@override
-  //void initState() {
-    //super.initState();
-    //FirebaseAdMob.instance
-      //  .initialize(appId: 'ca-app-pub-9841506883479519~1041793087');
-    //_bannerAd = createBannerAdd()..load();
-  //}
+class PDFScreen extends StatelessWidget {
+  String pathPDF = "";
+  PDFScreen(this.pathPDF);
 
-  //@override
-  //void dispose() {
-   // super.dispose();
-  //}
-
+  @override
+  Widget build(BuildContext context) {
+    return PDFViewerScaffold(
+      appBar: AppBar(
+        title: Text("Baca Buku"),
+      ),
+      path: pathPDF,
+    );
+  }
 }

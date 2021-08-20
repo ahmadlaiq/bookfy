@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:book/home.dart';
 import 'package:book/tambah.dart';
+import 'package:book/akun.dart';
 
 class Navbar extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class _NavbarState extends State<Navbar> {
   List<Widget> _widgetOptions = <Widget>[
     Home(),
     Tambah(),
-    Text('Profil'),
+    Akun(),
   ];
 
   void _onItemTap(int index) {
@@ -28,8 +29,8 @@ class _NavbarState extends State<Navbar> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        elevation: 3,
-        backgroundColor: Color(0xFF219653),
+        elevation: 4,
+        backgroundColor: Color(0xFFF5F6F9),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -39,7 +40,7 @@ class _NavbarState extends State<Navbar> {
             ),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add_box),
             title: Text(
               'Tambah',
               style: TextStyle(fontWeight: FontWeight.bold),

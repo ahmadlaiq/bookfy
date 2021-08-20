@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.book">
-   <uses-permission android:name="android.permission.INTERNET"/>
-   <application
+    <!-- Required to fetch data from the internet. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
         android:label="book"
         android:icon="@mipmap/ic_launcher">
         <activity

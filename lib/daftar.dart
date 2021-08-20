@@ -120,8 +120,8 @@ class _DaftarState extends State<Daftar> {
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                     child: Text(
-                      "Daftar",
-                      style: TextStyle(color: Colors.white),
+                      "Register",
+                      style: TextStyle(color: Colors.white,),
                     ),
                   ),
                 ),
