@@ -31,6 +31,11 @@ dependencies:
   flutter_full_pdf_viewer: ^1.0.6
   firebase_core: ^1.5.0
   cloud_firestore: ^2.5.0
+  provider: ^4.0.1
+  shared_preferences: ^2.0.6
+  lottie: ^1.1.0
+  getwidget: ^2.0.3
+  firebase_auth: ^3.0.2
 
 dev_dependencies:
   flutter_test:

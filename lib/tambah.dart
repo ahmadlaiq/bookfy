@@ -1,3 +1,4 @@
+import 'package:book/navbar.dart';
 import 'package:flutter/material.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,6 +20,8 @@ class _TambahState extends State<Tambah> {
   final TextEditingController penuliscontroller = TextEditingController();
   final TextEditingController tebalcontroller = TextEditingController();
   final TextEditingController tahuncontroller = TextEditingController();
+  final TextEditingController covercontroller = TextEditingController();
+  final TextEditingController filecontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +33,10 @@ class _TambahState extends State<Tambah> {
         child: ListView(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
               child: Text(
                 "Judul Buku",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -48,19 +48,18 @@ class _TambahState extends State<Tambah> {
                   fillColor: Colors.black12,
                   filled: true,
                   labelText: 'Ketik judul buku',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
                 textInputAction: TextInputAction.done,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Text(
                 "Penulis",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -72,19 +71,18 @@ class _TambahState extends State<Tambah> {
                   fillColor: Colors.black12,
                   filled: true,
                   labelText: 'Ketik nama penulis',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
                 textInputAction: TextInputAction.done,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Text(
                 "Tahun",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -96,19 +94,18 @@ class _TambahState extends State<Tambah> {
                   fillColor: Colors.black12,
                   filled: true,
                   labelText: 'Ketik tahun',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
                 textInputAction: TextInputAction.done,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Text(
                 "Tebal Buku",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -120,53 +117,55 @@ class _TambahState extends State<Tambah> {
                   fillColor: Colors.black12,
                   filled: true,
                   labelText: 'Ketik tebal buku',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
                 textInputAction: TextInputAction.done,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Text(
                 "Upload Cover",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
               child: TextField(
+                controller: covercontroller,
                 decoration: InputDecoration(
                   fillColor: Colors.black12,
                   filled: true,
                   labelText: 'Ketik link cover',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
                 textInputAction: TextInputAction.done,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Text(
                 "Upload E-book",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
               ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
               child: TextField(
+                controller: filecontroller,
                 decoration: InputDecoration(
                   fillColor: Colors.black12,
                   filled: true,
                   labelText: 'Ketik link e-book',
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
                 textInputAction: TextInputAction.done,
               ),
@@ -183,12 +182,25 @@ class _TambahState extends State<Tambah> {
                       'penulis': penuliscontroller.text,
                       'tahun': int.tryParse(tahuncontroller.text) ?? 0,
                       'tebal': int.tryParse(tebalcontroller.text) ?? 0,
+                      'cover': covercontroller.text,
+                      'file': filecontroller.text,
                     });
 
                     judulcontroller.text = '';
                     penuliscontroller.text = '';
                     tahuncontroller.text = '';
-                    tebalcontroller.text = '';
+                    covercontroller.text = '';
+                    filecontroller.text = '';
+                    setState(() {
+                       Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return Navbar();
+                          },
+                        ),
+                      );
+                                        });
                   },
                   color: Color(0xFF0275d8),
                   shape: RoundedRectangleBorder(

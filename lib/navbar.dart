@@ -29,11 +29,11 @@ class _NavbarState extends State<Navbar> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blueAccent,
         elevation: 4,
-        backgroundColor: Color(0xFFF5F6F9),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home,),
             title: Text(
               'Home',
               style: TextStyle(fontWeight: FontWeight.bold),

@@ -10,10 +10,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    final urlImage = 'https://i.imgur.com/DXdnBgg.gif';
+    final urlImage = 'https://i.imgur.com/XfNqhsa.png';
     return Scaffold(
       body: Container(
-          color: Color(0xFFFFFFFF),
           margin: EdgeInsets.all(0),
           child: ListView(
             children: <Widget>[
@@ -21,10 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 padding: const EdgeInsets.fromLTRB(40, 40, 0, 0),
                 child: Text(
                   "WELCOME",
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -34,10 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     padding: const EdgeInsets.fromLTRB(40, 5, 0, 0),
                     child: Text(
                       "TO",
-                      style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -58,10 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 padding: const EdgeInsets.fromLTRB(40, 3, 0, 0),
                 child: Text(
                   "Get & Find Your Favorit Book.",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
                   textAlign: TextAlign.left,
                 ),
               ),

@@ -19,10 +19,7 @@ class _DaftarState extends State<Daftar> {
             padding: const EdgeInsets.fromLTRB(20, 30, 0, 0),
             child: Text(
               "Daftar",
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
           ),
@@ -39,10 +36,7 @@ class _DaftarState extends State<Daftar> {
             padding: const EdgeInsets.fromLTRB(20, 5, 0, 0),
             child: Text(
               "Gratis !",
-              style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
           ),
@@ -53,7 +47,9 @@ class _DaftarState extends State<Daftar> {
                 fillColor: Colors.black12,
                 filled: true,
                 labelText: 'Nama Lengkap',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
               ),
               textInputAction: TextInputAction.done,
             ),
@@ -65,7 +61,9 @@ class _DaftarState extends State<Daftar> {
                 fillColor: Colors.black12,
                 filled: true,
                 labelText: 'Ketik E-mail',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
               ),
               textInputAction: TextInputAction.done,
             ),
@@ -78,7 +76,9 @@ class _DaftarState extends State<Daftar> {
                 fillColor: Colors.black12,
                 filled: true,
                 labelText: 'Ketik Password',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
               ),
               textInputAction: TextInputAction.done,
             ),
@@ -91,10 +91,7 @@ class _DaftarState extends State<Daftar> {
               ),
               Text(
                 "Saya menyetujui kebijakan & privasi Bookfy.",
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                    fontWeight: FontWeight.normal),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
                 textAlign: TextAlign.left,
               ),
             ],
@@ -115,7 +112,7 @@ class _DaftarState extends State<Daftar> {
                         ),
                       );
                     },
-                    color: Color(0xFF219653),
+                    color: Color(0xFF0275d8),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
